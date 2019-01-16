@@ -1,94 +1,3 @@
-/*import React ,{Component} from 'react';
-import {Alert, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-
-import {Camera, Permissions} from 'expo'
-import MainScreen from 'Login/Screens/MainScreen'
-
-
-export default class CameraComponent extends React.Component {
-    
-    state = {
-        hasCameraPermission: null,
-        type: Camera.Constants.Type.front
-    }
-
-    async componentWillMount(){
-        const {status} = await Permissions.askAsync(Permissions.CAMERA);
-        this.setState({hasCameraPermission: status === "granted"})
-    }
-
-    snap = async () => {
-        if (this.camera) {
-          let photo = await this.camera.takePictureAsync();
-        }
-      };
-
-
-  render() {
-    const {hasCameraPermission} = this.state;
-
-    if(hasCameraPermission === null){
-        return <View/>
-    }
-    else if(hasCameraPermission === false){
-        return <Text>No access camera</Text>
-    }
-    else{
-        return(
-            <View style={{flex:1}}>
-                <Camera style={{flex: 1}} type={this.state.type}>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                    <View style={styles.ButtonContainer}  >
-                        <View style={styles.outerCircle} >
-                            <View style={styles.innerCircle} />
-                            <Text style={styles.textButton} onPress={() => this.props.navigation.navigate('MainScreen')} >NEXT</Text>
-                        </View>
-                    </View>
-                        
-                    </TouchableOpacity>
-                    
-                </Camera>
-            </View>
-
-            
-            
-        )
-    }
-        
-  }
-}
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ButtonContainer:{
-    alignItems: 'center',
-    justifyContent: 'center',
-    //position: 'absolute',
-    bottom:'-80%',
-
-  },
-outerCircle: {
-    borderRadius: 40,
-    width: 80,
-    height: 80,
-    backgroundColor: 'white',
-  },
-  innerCircle: {
-    borderRadius: 35,
-    width: 70,
-    height: 70,
-    margin: 5,
-  },
-  
-  
-});
-*/
-
 import React from 'react';
 import {
   ActivityIndicator,
@@ -114,11 +23,30 @@ export default class App extends React.Component {
   state = {
     image: null,
     uploading: false,
+    uId: 'ciao',
   };
+
+  constructor() {
+    super()
+  }
   
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
+  }
+
+  componentDidMount()
+  {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user !=null)
+      {
+        this.setState({uId: user.uid})
+        this._takePhoto;
+
+        alert("login");
+      }
+    })
+
   }
 
   render() {
@@ -244,10 +172,17 @@ async function uploadImageAsync(uri) {
     xhr.send(null);
   });
 
+  firebase.auth().onAuthStateChanged((user)=>{
+    if(user !=null)
+    {
+      trial = user.uid;
+    }
+  })
+
   const ref = firebase
     .storage()
     .ref()
-    .child(uuid.v4());
+    .child('images/ ' + trial + '/Prova3');
   const snapshot = await ref.put(blob);
 
   // We're done with the blob, close and release it
