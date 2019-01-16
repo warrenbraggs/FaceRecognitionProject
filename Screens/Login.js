@@ -1,8 +1,8 @@
 import React ,{Component} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 
-import Camera from 'Login/Screens/Camera'
-import LoginUsername from 'Login/Screens/LoginUsername'
+//import Camera from 'Login/Screens/Camera'
+//import LoginUsername from 'Login/Screens/LoginUsername'
 
 
 export default class Login extends React.Component {

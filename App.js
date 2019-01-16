@@ -2,14 +2,14 @@ import React ,{Component} from 'react';
 import { StyleSheet, Text, View, Button, Image} from 'react-native';
 import MainScreen from './Screens/MainScreen.js'
 
-import Login from 'Login/Screens/Login'
-import Camera from 'Login/Screens/Camera'
-import LoginUsername from 'Login/Screens/LoginUsername'
+import Login from './Screens/Login'
+import Camera from './Screens/Camera'
+import LoginUsername from './Screens/LoginUsername'
 
-import Sign from 'Login/Screens/Sign.js'
-import RegisterFace from 'Login/Screens/CameraRegister'
+import Sign from './Screens/Sign.js'
+import RegisterFace from './Screens/CameraRegister'
 
-import Dashboard from 'Login/Screens/Dashboard'
+import Dashboard from './Screens/Dashboard'
 
  
 

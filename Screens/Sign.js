@@ -1,7 +1,7 @@
 import React ,{Component} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 
-import RegisterFace from 'Login/Screens/CameraRegister'
+//import RegisterFace from 'Login/Screens/CameraRegister'
 import firebase from './firebase'
 
 

@@ -1,10 +1,10 @@
 import React ,{Component} from 'react';
 import {Alert, StyleSheet, Text, View, Button, Image, TouchableOpacity} from 'react-native';
-import Camera from 'Login/Screens/Camera.js'
+//import Camera from 'Login/Screens/Camera.js'
 //import Login from 'Login/Screens/Login.js'
-import LoginUsername from 'Login/Screens/LoginUsername.js'
+//import LoginUsername from 'Login/Screens/LoginUsername.js'
 
-import Sign from 'Login/Screens/Sign.js'
+//import Sign from 'Login/Screens/Sign.js'
 
 
 export default class MainScreen extends React.Component {

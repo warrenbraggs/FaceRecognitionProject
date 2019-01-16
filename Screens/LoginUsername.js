@@ -1,10 +1,10 @@
 import React ,{Component} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 
-import Dashboard from 'Login/Screens/Dashboard'
+//import Dashboard from 'Login/Screens/Dashboard'
 import firebase from './firebase'
 
-import Camera from 'Login/Screens/Camera.js'
+//import Camera from 'Login/Screens/Camera.js'
 
 
 export default class Sign extends React.Component {
