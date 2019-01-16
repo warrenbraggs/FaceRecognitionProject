@@ -88,7 +88,7 @@ outerCircle: {
   
 });
 */
-d
+
 import React from 'react';
 import {
   ActivityIndicator,
