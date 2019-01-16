@@ -114,11 +114,32 @@ export default class App extends React.Component {
   state = {
     image: null,
     uploading: false,
+    uId: 'ur',
   };
+
+  constructor() {
+    super()
+    
+  }
   
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
+  }
+
+  componentDidMount()
+  {
+    firebase.auth().onAuthStateChanged(user =>{
+      if(user !=null)
+      {
+        this.setState({uId: user.uid})
+        alert(this.state.uId);
+        this._takePhoto;
+
+        
+      }
+    })
+
   }
 
   render() {
@@ -198,7 +219,7 @@ export default class App extends React.Component {
       aspect: [4, 3],
     });
 
-    this._handleImagePicked(pickerResult);
+    this._handleImagePicked(pickerResult,uId);
   };
 
   _pickImage = async () => {
@@ -210,7 +231,7 @@ export default class App extends React.Component {
     this._handleImagePicked(pickerResult);
   };
 
-  _handleImagePicked = async pickerResult => {
+  _handleImagePicked = async (pickerResult) => {
     try {
       this.setState({ uploading: true });
         
@@ -228,6 +249,8 @@ export default class App extends React.Component {
 }
 
 async function uploadImageAsync(uri) {
+  
+
   // Why are we using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
@@ -244,10 +267,22 @@ async function uploadImageAsync(uri) {
     xhr.send(null);
   });
 
+  
+  trial = '';
+  
+  firebase.auth().onAuthStateChanged(user =>{
+    if(user !=null)
+    {
+      trial = user.uid;
+      
+    }
+  });
+  
+
   const ref = firebase
     .storage()
     .ref()
-    .child(uuid.v4());
+    .child('images/ ' + trial + '/Prova2');
   const snapshot = await ref.put(blob);
 
   // We're done with the blob, close and release it
