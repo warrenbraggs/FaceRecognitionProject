@@ -1,99 +1,3 @@
-/*import React ,{Component} from 'react';
-import {Alert, StyleSheet, Text, View, Image} from 'react-native';
-
-import {Camera, Permissions} from 'expo'
-
-import Dashboard from 'Login/Screens/Dashboard'
-
-import { ImagePicker } from 'expo';
-
-//import {CameraRoll } from 'react-native-camera'
-
-export default class CameraComponent extends React.Component {
-    
-    state = {
-        hasCameraPermission: null,
-        type: Camera.Constants.Type.front
-    }
-
-    async componentWillMount(){
-        const {status} = await Permissions.askAsync(Permissions.CAMERA);
-        this.setState({hasCameraPermission: status === "granted"})
-    }
-
-    snap = async () => {
-        if (this.camera) {
-          let photo = await this.camera.takePictureAsync();
-        }
-      };
-
-
-  render() {
-    const {hasCameraPermission} = this.state;
-
-    if(hasCameraPermission === null){
-        return <View/>
-    }
-    else if(hasCameraPermission === false){
-        return <Text>No access camera</Text>
-    }
-    else{
-        return(
-            <View style={{flex:1}}>
-                <Camera style={{flex: 1}} type={this.state.type}>
-                    <View style={styles.ButtonContainer} onPress={() => this.props.navigation.navigate('Dashboard')} >
-                        <View style={styles.outerCircle} onPress={() => this.props.navigation.navigate('Dashboard')}>
-                        <Text style={styles.textButton} onPress={() => Expo.ImagePicker.launchCameraAsync()} >NEXT</Text>
-                            <View style={styles.innerCircle} onPress={() => this.props.navigation.navigate('Dashboard')}/>
-                        </View>
-                    </View>
-                </Camera>
-            </View>
-
-            
-        )
-    }
-        
-  }
-}
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ButtonContainer:{
-    alignItems: 'center',
-    justifyContent: 'center',
-    //position: 'absolute',
-    bottom:'-80%',
-  },
-  textButton:{
-    color: 'white',
-    padding: 40,
-    
-  },
-outerCircle: {
-    borderRadius: 40,
-    width: 80,
-    height: 80,
-    backgroundColor: 'white',
-  },
-  innerCircle: {
-    borderRadius: 35,
-    width: 70,
-    height: 70,
-    margin: 5,
-  },
-  
-  
-});
-*/
-
-
-
 import React from 'react';
 import {
   ActivityIndicator,
@@ -249,8 +153,11 @@ export default class App extends React.Component {
 }
 
 
+confidenceMethod = async => {
+  this.props.navigation.navigate('Dashboard');
+}
+
 async function uploadImageAsync(uri,uid) {
-  // Why are we using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -264,21 +171,30 @@ async function uploadImageAsync(uri,uid) {
     xhr.responseType = 'blob';
     xhr.open('GET', uri, true);
     xhr.send(null);
-
     
   });
-
+  
+  
   const ref = firebase
   .storage()
   .ref()
+  .child('Utenti/ ' + uid + '/Image1');
+
+  const ref1 = firebase
+  .storage()
+  .ref()
   .child('Utenti/ ' + uid + '/Image');
-  //await console.log(window.URL.createObjectURL(blob));
-/*const snapshot = await ref.put(blob);*/
+
+  const snapshot = await ref.put(blob);
+
 let formData = new FormData();
 formData.append('api_key', '0U6kvuNRGOt8NUdhL54CUwu2IqJ9jULv');
 formData.append('api_secret', 'Axr2N1WqPPr1pEChT-pJLdxIPu_90WXT');
-formData.append('image_url1', await ref.getDownloadURL());
-formData.append('image_url2', await ref.getDownloadURL()); // da cambiare
+formData.append('image_url1', await ref1.getDownloadURL());
+formData.append('image_url2', await snapshot.ref.getDownloadURL()); // da cambiare
+
+
+  
 
   const response = await fetch(
     'https://api-us.faceplusplus.com/facepp/v3/compare',
@@ -288,17 +204,20 @@ formData.append('image_url2', await ref.getDownloadURL()); // da cambiare
     }
     ).then((response)=>response.json())
     .then((json) => {
-      console.log(json);
+      console.log(json.confidence);
+      if(parseFloat(json.confidence) > 90){
+        this.confidenceMethod();
+        console.log("UR TUTTO OKKKKKKKKKKKKKKKKKK?");
+      }
      })
     .catch(() => {
       reject('ERROR GETTING DATA FROM FACE ')
     })
 
-// We're done with the blob, close and release it
-blob.close();
+    blob.close();
 
-  return await ref.getDownloadURL();
+
+return await ref.getDownloadURL();
 }
-
 
 
