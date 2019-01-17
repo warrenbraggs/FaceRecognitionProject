@@ -1,6 +1,6 @@
 ## Face Recognition
 
-Simple  Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo...... da completare
+Simple Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo...... da completare
 
 ## Partecipanti
  - Braggs Federico Warren 
@@ -9,10 +9,10 @@ Simple  Login App based on Email & Face Recognition. This app let you create an 
 ## Ruoli
 
 * PROJECT_MANAGER = Ur rehman Haseeb
-* DOCUMENTAZIONE = Ur rehman Haseeb & Braggs Federico Warren
-* React Native(Javascript)= Ur rehman Haseeb & Braggs Federico Warren
+* DOCUMENTAZIONE = Ur rehman Haseeb & Braggs Warren Federico
+* React Native(Javascript)= Ur rehman Haseeb & Braggs Warren Federico
 * Firebase Configuration 
-  - Storage =Ur rehman Haseeb & Braggs Federico Warren
+  - Storage = Ur rehman Haseeb & Braggs Warren Federico
   - Authentication = Ur rehman Haseeb
 
 ## Regolamento
