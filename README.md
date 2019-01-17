@@ -1,6 +1,6 @@
 ## Face Recognition
 
-Simple  Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo......
+Simple  Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo...... da completare
 
 ## Partecipanti
  - Braggs Federico Warren 
