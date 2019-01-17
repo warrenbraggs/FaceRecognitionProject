@@ -264,6 +264,8 @@ async function uploadImageAsync(uri,uid) {
     xhr.responseType = 'blob';
     xhr.open('GET', uri, true);
     xhr.send(null);
+
+    
   });
 
   const ref = firebase
@@ -276,7 +278,7 @@ let formData = new FormData();
 formData.append('api_key', '0U6kvuNRGOt8NUdhL54CUwu2IqJ9jULv');
 formData.append('api_secret', 'Axr2N1WqPPr1pEChT-pJLdxIPu_90WXT');
 formData.append('image_url1', await ref.getDownloadURL());
-formData.append('image_url2', uri); // da cambiare
+formData.append('image_url2', await ref.getDownloadURL()); // da cambiare
 
   const response = await fetch(
     'https://api-us.faceplusplus.com/facepp/v3/compare',
@@ -294,13 +296,6 @@ formData.append('image_url2', uri); // da cambiare
 
 // We're done with the blob, close and release it
 blob.close();
-
-
-    
-   
-   
-
-  
 
   return await ref.getDownloadURL();
 }
