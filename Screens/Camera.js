@@ -94,112 +94,216 @@ outerCircle: {
 
 
 
-import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import Expo, { Constants, Permissions, Camera, MediaLibrary } from 'expo';
+import React from 'react';
+import {
+  ActivityIndicator,
+  Button,
+  Clipboard,
+  Image,
+  Share,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Constants, ImagePicker, Permissions } from 'expo';
+import * as firebase from 'firebase';
 
-export default class App extends Component {
+console.disableYellowBox = true;
+
+
+
+export default class App extends React.Component {
   state = {
-    rollGranted: false,
-    cameraGranted: false,
+    image: null,
+    uploading: false,
+    uId: 'ciao',
   };
 
-  componentDidMount() {
-    this.getCameraPermissions();
+  
+  
+  async componentDidMount() {
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    await Permissions.askAsync(Permissions.CAMERA);
   }
 
-  async getCameraPermissions() {
-    const { Permissions } = Expo;
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    if (status === 'granted') {
-      this.setState({ cameraGranted: true });
-    } else {
-      this.setState({ cameraGranted: false });
-      console.log('Uh oh! The user has not granted us permission.');
-    }
-    this.getCameraRollPermissions();
-  }
+  componentDidMount()
+  {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user !=null)
+      {
+        this.setState({uId: user.uid})
+      }
+    })
 
-  async getCameraRollPermissions() {
-    const { Permissions } = Expo;
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      this.setState({ rollGranted: true });
-    } else {
-      console.log('Uh oh! The user has not granted us permission.');
-      this.setState({ rollGranted: false });
-    }
   }
-
-  takePictureAndCreateAlbum = async () => {
-    console.log('tpaca');
-    const { uri } = await this.camera.takePictureAsync();
-    console.log('uri', uri);
-    const asset = await MediaLibrary.createAssetAsync(uri);
-    console.log('asset', asset);
-    MediaLibrary.createAlbumAsync('Expo', asset)
-      .then(() => {
-        Alert.alert('Album created!')
-      })
-      .catch(error => {
-        Alert.alert('An Error Occurred!')
-      });
-  };
+  ur(){
+    
+  }
 
   render() {
+    let { image } = this.state;
+
     return (
-      <View style={styles.container}>
-        <Camera
-          type={Camera.Constants.Type.front}
-          style={{ flex: 1 }}
-          ref={ref => {
-            this.camera = ref;
-          }}
-        />
-        <TouchableOpacity
-          onPress={() =>
-            this.state.rollGranted && this.state.cameraGranted
-              ? this.takePictureAndCreateAlbum()
-              : Alert.alert('Permissions not granted')
-          }
-          style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>
-              Take Photo
-            </Text>
-          </View>
-        </TouchableOpacity>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        
+
+        <Button onPress={this._takePhoto} title="VERIFY" />
+
+        {this._maybeRenderImage()}
+        {this._maybeRenderUploadingOverlay()}
+
+        <StatusBar barStyle="default" />
       </View>
     );
   }
+
+  _maybeRenderUploadingOverlay = () => {
+    if (this.state.uploading) {
+      return (
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          ]}>
+          <ActivityIndicator color="#fff" animating size="large" />
+        </View>
+      );
+    }
+  };
+
+  _maybeRenderImage = () => {
+    let { image } = this.state;
+    if (!image) {
+      return;
+    }
+
+    return (
+      <View
+        style={{
+          marginTop: 30,
+          width: 250,
+          borderRadius: 3,
+          elevation: 2,
+        }}>
+        <View
+          style={{
+            borderTopRightRadius: 3,
+            borderTopLeftRadius: 3,
+            shadowColor: 'rgba(0,0,0,1)',
+            shadowOpacity: 0.2,
+            shadowOffset: { width: 4, height: 4 },
+            shadowRadius: 5,
+            overflow: 'hidden',
+          }}>
+          <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
+        </View>
+
+        <Text
+          onPress={() => this.props.navigation.navigate('MainScreen')}
+          >Go back to home
+        </Text>
+      </View>
+    );
+  };
+
+  
+  _takePhoto = async () => {
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    this._handleImagePicked(pickerResult);
+  };
+
+  _pickImage = async () => {
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    this._handleImagePicked(pickerResult);
+  };
+
+  _handleImagePicked = async pickerResult => {
+    try {
+      this.setState({ uploading: true });
+      console.log("pickerResult",pickerResult);
+      if (!pickerResult.cancelled) {
+        let prova = await uploadImageAsync(pickerResult.uri,this.state.uId);
+        this.setState({ image: prova });
+      }
+    } catch (e) {
+      console.log(e);
+      alert('Upload failed, sorry :(');
+    } finally {
+      this.setState({ uploading: false });
+    }
+  };
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 30,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
-  button: {
-    width: 200,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 4,
-    paddingVertical: 4,
-    borderWidth: 1.5,
-    borderColor: '#fff',
-  },
-  buttonText: {
-    fontSize: 24,
-    color: '#fff',
-  },
-});
+
+async function uploadImageAsync(uri,uid) {
+  // Why are we using XMLHttpRequest? See:
+  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function(e) {
+      console.log(e);
+      reject(new TypeError('Network request failed'));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', uri, true);
+    xhr.send(null);
+  });
+
+  const ref = firebase
+  .storage()
+  .ref()
+  .child('Utenti/ ' + uid + '/Image');
+  //await console.log(window.URL.createObjectURL(blob));
+/*const snapshot = await ref.put(blob);*/
+let formData = new FormData();
+formData.append('api_key', '0U6kvuNRGOt8NUdhL54CUwu2IqJ9jULv');
+formData.append('api_secret', 'Axr2N1WqPPr1pEChT-pJLdxIPu_90WXT');
+formData.append('image_url1', await ref.getDownloadURL());
+formData.append('image_url2', uri); // da cambiare
+
+  const response = await fetch(
+    'https://api-us.faceplusplus.com/facepp/v3/compare',
+    {
+      method:"POST",
+      body:formData
+    }
+    ).then((response)=>response.json())
+    .then((json) => {
+      console.log(json);
+     })
+    .catch(() => {
+      reject('ERROR GETTING DATA FROM FACE ')
+    })
+
+// We're done with the blob, close and release it
+blob.close();
+
+
+    
+   
+   
+
+  
+
+  return await ref.getDownloadURL();
+}
+
 
 
