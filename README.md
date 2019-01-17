@@ -3,8 +3,8 @@
 Simple  Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo......
 
 ## Partecipanti
-Braggs Federico Warren 
-Ur rehman Haseeb
+ - Braggs Federico Warren 
+ - Ur rehman Haseeb
 
 ## Ruoli
 
@@ -13,7 +13,7 @@ Ur rehman Haseeb
 * React Native(Javascript)= Ur rehman Haseeb & Braggs Federico Warren
 * Firebase Configuration 
   - Storage =Ur rehman Haseeb & Braggs Federico Warren
-  -Authentication = Ur rehman Haseeb
+  - Authentication = Ur rehman Haseeb
 
 ## Regolamento
 * Ogni gruppo consegnerà il link ad un repository GIT che sarà un fork di questo progetto.
