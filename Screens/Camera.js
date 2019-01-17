@@ -109,8 +109,8 @@ export default class App extends React.Component {
         </View>
 
         <Text
-          onPress={() => this.props.navigation.navigate('MainScreen')}
-          >Go back to home
+          onPress={() => this.props.navigation.navigate('Dashboard')}
+          >GO TO YOUR PROFILE
         </Text>
       </View>
     );
