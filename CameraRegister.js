@@ -1,94 +1,3 @@
-/*import React ,{Component} from 'react';
-import {Alert, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-
-import {Camera, Permissions} from 'expo'
-import MainScreen from 'Login/Screens/MainScreen'
-
-
-export default class CameraComponent extends React.Component {
-    
-    state = {
-        hasCameraPermission: null,
-        type: Camera.Constants.Type.front
-    }
-
-    async componentWillMount(){
-        const {status} = await Permissions.askAsync(Permissions.CAMERA);
-        this.setState({hasCameraPermission: status === "granted"})
-    }
-
-    snap = async () => {
-        if (this.camera) {
-          let photo = await this.camera.takePictureAsync();
-        }
-      };
-
-
-  render() {
-    const {hasCameraPermission} = this.state;
-
-    if(hasCameraPermission === null){
-        return <View/>
-    }
-    else if(hasCameraPermission === false){
-        return <Text>No access camera</Text>
-    }
-    else{
-        return(
-            <View style={{flex:1}}>
-                <Camera style={{flex: 1}} type={this.state.type}>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                    <View style={styles.ButtonContainer}  >
-                        <View style={styles.outerCircle} >
-                            <View style={styles.innerCircle} />
-                            <Text style={styles.textButton} onPress={() => this.props.navigation.navigate('MainScreen')} >NEXT</Text>
-                        </View>
-                    </View>
-                        
-                    </TouchableOpacity>
-                    
-                </Camera>
-            </View>
-
-            
-            
-        )
-    }
-        
-  }
-}
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ButtonContainer:{
-    alignItems: 'center',
-    justifyContent: 'center',
-    //position: 'absolute',
-    bottom:'-80%',
-
-  },
-outerCircle: {
-    borderRadius: 40,
-    width: 80,
-    height: 80,
-    backgroundColor: 'white',
-  },
-  innerCircle: {
-    borderRadius: 35,
-    width: 70,
-    height: 70,
-    margin: 5,
-  },
-  
-  
-});
-*/
-
 import React from 'react';
 import {
   ActivityIndicator,
@@ -114,13 +23,10 @@ export default class App extends React.Component {
   state = {
     image: null,
     uploading: false,
-    uId: 'ur',
+    uId: 'ciao',
   };
 
-  constructor() {
-    super()
-    
-  }
+  
   
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -129,17 +35,16 @@ export default class App extends React.Component {
 
   componentDidMount()
   {
-    firebase.auth().onAuthStateChanged(user =>{
+    firebase.auth().onAuthStateChanged((user)=>{
       if(user !=null)
       {
         this.setState({uId: user.uid})
-        alert(this.state.uId);
-        this._takePhoto;
-
-        
       }
     })
 
+  }
+  ur(){
+    
   }
 
   render() {
@@ -219,7 +124,7 @@ export default class App extends React.Component {
       aspect: [4, 3],
     });
 
-    this._handleImagePicked(pickerResult,uId);
+    this._handleImagePicked(pickerResult);
   };
 
   _pickImage = async () => {
@@ -231,12 +136,12 @@ export default class App extends React.Component {
     this._handleImagePicked(pickerResult);
   };
 
-  _handleImagePicked = async (pickerResult) => {
+  _handleImagePicked = async pickerResult => {
     try {
       this.setState({ uploading: true });
         
       if (!pickerResult.cancelled) {
-        let prova = await uploadImageAsync(pickerResult.uri);
+        let prova = await uploadImageAsync(pickerResult.uri,this.state.uId);
         this.setState({ image: prova });
       }
     } catch (e) {
@@ -248,9 +153,8 @@ export default class App extends React.Component {
   };
 }
 
-async function uploadImageAsync(uri) {
-  
 
+async function uploadImageAsync(uri,uid) {
   // Why are we using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
@@ -268,21 +172,11 @@ async function uploadImageAsync(uri) {
   });
 
   
-  trial = '';
-  
-  firebase.auth().onAuthStateChanged(user =>{
-    if(user !=null)
-    {
-      trial = user.uid;
-      
-    }
-  });
-  
 
   const ref = firebase
     .storage()
     .ref()
-    .child('images/ ' + trial + '/Prova2');
+    .child('Utenti/ ' + uid + '/Image');
   const snapshot = await ref.put(blob);
 
   // We're done with the blob, close and release it
