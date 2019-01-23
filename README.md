@@ -13,6 +13,7 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 * FrontEnd Developer = Braggs Warren Federico
 ## Regolamento
 * https://github.com/federicobraggs/FaceRecognitionProject.git
+* La documentazione andrà caricata nella sezione Wiki di questo repo.
 * Il codice andrà caricato in una cartella public all'interno della root del repository
 * il progetto deve contenere un file .pdf con il documento di specifica dei requisiti (user story + casi uso + diagramma classi + (opzionale) un diagramma di sequenza).
 * redazione di una relazione tecnica del progetto (caricata come file .md)
