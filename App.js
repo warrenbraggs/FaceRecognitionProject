@@ -11,15 +11,10 @@ import RegisterFace from './Screens/CameraRegister'
 
 import Dashboard from './Screens/Dashboard'
 
- 
-
 import {
   createStackNavigator,
   createAppContainer
 } from 'react-navigation';
-
-
-
 
 const AppNavigator = createStackNavigator({
   MainScreen: {
@@ -73,13 +68,9 @@ export default class App extends React.Component {
   render() {
     return (
       <AppContainer/>
-      /*<View style={{flex:1}}>
-        <Camera></Camera>
-      </View>*/
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -88,10 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
-  
-
-    
+      
 });
 
 

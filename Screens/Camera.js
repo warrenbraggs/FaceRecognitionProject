@@ -16,8 +16,6 @@ import * as firebase from 'firebase';
 
 console.disableYellowBox = true;
 
-
-
 export default class App extends React.Component {
   state = {
     image: null,
@@ -25,11 +23,10 @@ export default class App extends React.Component {
     uId: 'ciao',
   };
 
-  
-  
   async componentDidMount() {
-    await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
   }
 
   componentDidMount()
@@ -42,9 +39,7 @@ export default class App extends React.Component {
     })
 
   }
-  ur(){
-    
-  }
+  
 
   render() {
     let { image } = this.state;
@@ -52,9 +47,13 @@ export default class App extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         
-
-        <Button onPress={this._takePhoto} title="VERIFY" />
-
+        <Image 
+            style={{width:300,height:300}}
+            source={require('/Users/fede/node_modules/Login/Images/homeImage.png')}/>
+        <Text>Get ready to unlock your profile.</Text>
+        <Text>First,position your face in the camera frame.</Text>
+        <Text></Text>
+        <Button onPress={this._takePhoto} title="Get Started" />
         {this._maybeRenderImage()}
         {this._maybeRenderUploadingOverlay()}
 
@@ -108,10 +107,6 @@ export default class App extends React.Component {
           <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
         </View>
 
-        <Text
-          onPress={() => this.props.navigation.navigate('Dashboard')}
-          >GO TO YOUR PROFILE
-        </Text>
       </View>
     );
   };
@@ -119,8 +114,9 @@ export default class App extends React.Component {
   
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
+      allowsEditing: false,
+      aspect: [4, 4],
+      
     });
 
     this._handleImagePicked(pickerResult);
@@ -140,7 +136,7 @@ export default class App extends React.Component {
       this.setState({ uploading: true });
       console.log("pickerResult",pickerResult);
       if (!pickerResult.cancelled) {
-        let prova = await uploadImageAsync(pickerResult.uri,this.state.uId);
+        let prova = await uploadImageAsync(pickerResult.uri,this.state.uId,this);
         this.setState({ image: prova });
       }
     } catch (e) {
@@ -157,8 +153,7 @@ confidenceMethod = async => {
   this.props.navigation.navigate('Dashboard');
 }
 
-async function uploadImageAsync(uri,uid) {
-  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+async function uploadImageAsync(uri,uid,main) {
   const blob = await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
@@ -174,7 +169,6 @@ async function uploadImageAsync(uri,uid) {
     
   });
   
-  
   const ref = firebase
   .storage()
   .ref()
@@ -187,14 +181,12 @@ async function uploadImageAsync(uri,uid) {
 
   const snapshot = await ref.put(blob);
 
-let formData = new FormData();
-formData.append('api_key', '0U6kvuNRGOt8NUdhL54CUwu2IqJ9jULv');
-formData.append('api_secret', 'Axr2N1WqPPr1pEChT-pJLdxIPu_90WXT');
-formData.append('image_url1', await ref1.getDownloadURL());
-formData.append('image_url2', await snapshot.ref.getDownloadURL()); // da cambiare
+  let formData = new FormData();
+  formData.append('api_key', '0U6kvuNRGOt8NUdhL54CUwu2IqJ9jULv');
+  formData.append('api_secret', 'Axr2N1WqPPr1pEChT-pJLdxIPu_90WXT');
+  formData.append('image_url1', await ref1.getDownloadURL());
+  formData.append('image_url2', await snapshot.ref.getDownloadURL()); // da cambiare
 
-
-  
 
   const response = await fetch(
     'https://api-us.faceplusplus.com/facepp/v3/compare',
@@ -205,9 +197,11 @@ formData.append('image_url2', await snapshot.ref.getDownloadURL()); // da cambia
     ).then((response)=>response.json())
     .then((json) => {
       console.log(json.confidence);
-      if(parseFloat(json.confidence) > 90){
-        this.confidenceMethod();
-        console.log("UR TUTTO OKKKKKKKKKKKKKKKKKK?");
+      if(parseFloat(json.confidence) > 90){ 
+          main.props.navigation.navigate('Dashboard');
+      }else{
+        alert("Face not equal");
+        main.props.navigation.navigate('MainScreen');
       }
      })
     .catch(() => {
@@ -215,7 +209,6 @@ formData.append('image_url2', await snapshot.ref.getDownloadURL()); // da cambia
     })
 
     blob.close();
-
 
 return await ref.getDownloadURL();
 }

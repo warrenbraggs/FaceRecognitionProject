@@ -1,11 +1,7 @@
 import React ,{Component} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 
-//import Dashboard from 'Login/Screens/Dashboard'
 import firebase from './firebase'
-
-//import Camera from 'Login/Screens/Camera.js'
-
 
 export default class Sign extends React.Component {
   constructor(props){
@@ -43,8 +39,8 @@ export default class Sign extends React.Component {
           secureTextEntry
             style={styles.input}/>
       
-      <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.textButton} onPress={() => this.loginUser(this.state.email,this.state.password)} >NEXT</Text>
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => this.loginUser(this.state.email,this.state.password)}>
+          <Text style={styles.textButton}>NEXT</Text>
       </TouchableOpacity>
       
       </View>

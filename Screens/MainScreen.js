@@ -1,16 +1,7 @@
 import React ,{Component} from 'react';
 import {Alert, StyleSheet, Text, View, Button, Image, TouchableOpacity} from 'react-native';
-//import Camera from 'Login/Screens/Camera.js'
-//import Login from 'Login/Screens/Login.js'
-//import LoginUsername from 'Login/Screens/LoginUsername.js'
-
-//import Sign from 'Login/Screens/Sign.js'
-
 
 export default class MainScreen extends React.Component {
-  handleButton = () =>{
-    
-  }
 
   render() {
     return (
@@ -18,28 +9,26 @@ export default class MainScreen extends React.Component {
         <View style={styles.container}> 
         <Image 
             style={styles.image}
-            source={require('/Users/fede/node_modules/Login/Images/homeImage.png')}/>
-            
+            source={require('/Users/fede/node_modules/Login/Images/logo.png')}/>
       </View>
 
       <View style={styles.loginContainer}> 
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.textButton} onPress={() => this.props.navigation.navigate('LoginUsername')} >LOGIN</Text>
+        <TouchableOpacity style={styles.buttonContainer}  onPress={() => this.props.navigation.navigate('LoginUsername')} >
+          <Text style={styles.textButton}>LOGIN</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonContainer1}>
-          <Text style={styles.textButton} onPress={() => this.props.navigation.navigate('Sign')}>SIGN IN</Text>
+        <TouchableOpacity style={styles.buttonContainer1} onPress={() => this.props.navigation.navigate('Sign')}>
+          <Text style={styles.textButton} >SIGN IN</Text>
         </TouchableOpacity>
       </View>
       </View>
-
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    flex: 3,
     backgroundColor: '#3498db',
     alignItems: 'center',
     justifyContent: 'center',
@@ -51,8 +40,9 @@ const styles = StyleSheet.create({
   },
 
   image:{
-    height:300,
-    width:300,
+    height:200,
+    width:200,
+    
   },
   buttonContainer:{
     backgroundColor:'#2980b9',
@@ -72,5 +62,4 @@ const styles = StyleSheet.create({
     paddingTop:10, 
   },
 
-    
 });

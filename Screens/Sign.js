@@ -1,9 +1,7 @@
 import React ,{Component} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 
-//import RegisterFace from 'Login/Screens/CameraRegister'
 import firebase from './firebase'
-
 
 export default class Sign extends React.Component {
   constructor(props){
@@ -27,7 +25,6 @@ export default class Sign extends React.Component {
      {
        console.log(error.toString())
      }
- 
     }
 
   render() {
@@ -49,11 +46,10 @@ export default class Sign extends React.Component {
           secureTextEntry
             style={styles.input}/>
       
-      <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.textButton} onPress={() => this.SignUpUser(this.state.email,this.state.password)} >NEXT</Text>
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => this.SignUpUser(this.state.email,this.state.password)} >
+          <Text style={styles.textButton} >NEXT</Text>
       </TouchableOpacity>
-      
-
+    
       </View>
     );
   }
@@ -62,7 +58,7 @@ export default class Sign extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 2,
-    backgroundColor: '#2ecc71',
+    backgroundColor: '#9b59b6',
     padding:20,
     paddingTop:100,
   },
@@ -74,7 +70,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   buttonContainer:{
-    backgroundColor: '#27ae60',
+    backgroundColor: '#8e44ad',
     height:40,
     width:100,
     alignItems: 'center',

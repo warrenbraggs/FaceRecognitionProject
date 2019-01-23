@@ -17,8 +17,6 @@ import * as firebase from 'firebase';
 
 console.disableYellowBox = true;
 
-
-
 export default class App extends React.Component {
   state = {
     image: null,
@@ -26,8 +24,6 @@ export default class App extends React.Component {
     uId: 'ciao',
   };
 
-  
-  
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
@@ -43,10 +39,7 @@ export default class App extends React.Component {
     })
 
   }
-  ur(){
-    
-  }
-
+  
   render() {
     let { image } = this.state;
 
@@ -155,8 +148,6 @@ export default class App extends React.Component {
 
 
 async function uploadImageAsync(uri,uid) {
-  // Why are we using XMLHttpRequest? See:
-  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
@@ -171,8 +162,6 @@ async function uploadImageAsync(uri,uid) {
     xhr.send(null);
   });
 
-  
-
   const ref = firebase
     .storage()
     .ref()
@@ -181,7 +170,7 @@ async function uploadImageAsync(uri,uid) {
 
   // We're done with the blob, close and release it
   blob.close();
-
+  
   return await snapshot.ref.getDownloadURL();
 }
 
