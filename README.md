@@ -1,20 +1,16 @@
 ## Face Recognition
 
-Simple Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo...... da completare
+Simple  Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo...... da completare
 
 ## Partecipanti
  - Braggs Federico Warren 
  - Ur rehman Haseeb
 
 ## Ruoli
-
 * PROJECT_MANAGER = Ur rehman Haseeb
-* DOCUMENTAZIONE = Ur rehman Haseeb & Braggs Warren Federico
-* React Native(Javascript)= Ur rehman Haseeb & Braggs Warren Federico
-* Firebase Configuration 
-  - Storage = Ur rehman Haseeb & Braggs Warren Federico
-  - Authentication = Ur rehman Haseeb
-
+* DOCUMENTAZIONE = Ur rehman Haseeb & Braggs Federico Warren
+* Backend Developer = Ur Rehman Haseeb
+* FrontEnd Developer = Braggs Warren Federico
 ## Regolamento
 * Ogni gruppo consegnerà il link ad un repository GIT che sarà un fork di questo progetto.
 * La documentazione andrà caricata nella sezione Wiki di questo repo.
@@ -27,3 +23,16 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 <p>RUN npm install<br></p>
 <p>RUN npm install react_navigation<br></p>
 <p>RUN npm install <br></p>
+<p>RUN npm firbase <br></p>
+
+
+# Configure config.js - Add your firebase app config keys
+<p>export const firebaseConfig = {<br></p>
+<p>  apiKey: '',<br></p>
+ <p> authDomain: '',<br></p>
+ <p> databaseURL: '',<br></p>
+ <p> projectId: '',<br></p>
+ <p> storageBucket: '',<br></p>
+ <p> messagingSenderId: ''<br></p>
+<p>};<br></p>
+# That's all you need!
