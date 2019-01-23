@@ -3,12 +3,12 @@
 Simple  Login App based on Email & Face Recognition. This app let you create an account and than verifiy your account with photo...... da completare
 
 ## Partecipanti
- - Braggs Federico Warren 
- - Ur rehman Haseeb
+ - Braggs Warren  Federico 
+ - Ur Rehman Haseeb
 
 ## Ruoli
-* PROJECT_MANAGER = Ur rehman Haseeb
-* DOCUMENTAZIONE = Ur rehman Haseeb & Braggs Federico Warren
+* PROJECT_MANAGER = Ur Rehman Haseeb
+* DOCUMENTAZIONE = Ur Rehman Haseeb & Braggs Warren Federico 
 * Backend Developer = Ur Rehman Haseeb
 * FrontEnd Developer = Braggs Warren Federico
 ## Regolamento
