@@ -18,7 +18,7 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 * il progetto deve contenere un file .pdf con il documento di specifica dei requisiti (user story + casi uso + diagramma classi + (opzionale) un diagramma di sequenza).
 * redazione di una relazione tecnica del progetto (caricata come file .md) :white_check_mark:
 
-# Instrunction to run this Project 
+# Instruction to run this Project 
 <p>RUN npm install<br></p>
 <p>RUN npm install react_navigation<br></p>
 <p>RUN npm install firebase <br></p>
