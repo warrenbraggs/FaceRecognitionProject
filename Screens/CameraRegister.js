@@ -1,3 +1,7 @@
+/*
+  Import all react basic components like libraries, structure and ImagePicker from
+  expo to get access to camera
+*/
 import React from 'react';
 import {
   ActivityIndicator,
@@ -12,7 +16,9 @@ import {
   View,
 } from 'react-native';
 import { Constants, ImagePicker, Permissions } from 'expo';
-import uuid from 'uuid';
+/*
+    Import firebase to the project
+*/
 import * as firebase from 'firebase';
 
 console.disableYellowBox = true;
@@ -23,12 +29,16 @@ export default class App extends React.Component {
     uploading: false,
     uId: 'ciao',
   };
-
+/*
+  Check Camera permissions
+*/
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
   }
-
+/*
+  Check firebase database connection with user identification
+*/
   componentDidMount()
   {
     firebase.auth().onAuthStateChanged((user)=>{
@@ -47,7 +57,7 @@ export default class App extends React.Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         
 
-        <Button onPress={this._takePhoto} title="Take a photo" />
+        <Button onPress={this._takePhoto} title="Get Started" />     
 
         {this._maybeRenderImage()}
         {this._maybeRenderUploadingOverlay()}
@@ -56,6 +66,10 @@ export default class App extends React.Component {
       </View>
     );
   }
+
+  /*
+    Handle the upload
+  */
 
   _maybeRenderUploadingOverlay = () => {
     if (this.state.uploading) {
@@ -102,15 +116,16 @@ export default class App extends React.Component {
           <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
         </View>
 
-        <Text
-          onPress={() => this.props.navigation.navigate('MainScreen')}
-          >Go back to home
-        </Text>
+      
+        <Button onPress={() => this.props.navigation.navigate('MainScreen')} title="<- Go back home" />
       </View>
     );
   };
 
-  
+  /*
+    TakePhoto with ImagePicker method.
+    This photo will be sent to another method to handle it
+  */
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -120,6 +135,10 @@ export default class App extends React.Component {
     this._handleImagePicked(pickerResult);
   };
 
+  /*
+    Pick an image from the phone library with a method of ImagePicker
+    This image will be sent to another method to hanle it
+  */
   _pickImage = async () => {
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -129,6 +148,10 @@ export default class App extends React.Component {
     this._handleImagePicked(pickerResult);
   };
 
+  /*
+    This method can check if the image sent is correct. 
+    If is not, it will return an error message
+  */
   _handleImagePicked = async pickerResult => {
     try {
       this.setState({ uploading: true });
@@ -146,7 +169,10 @@ export default class App extends React.Component {
   };
 }
 
-
+/*
+  This is the main method that enable to send the image to the 
+  firebase database through the uri of the image and uid of the user. 
+  */
 async function uploadImageAsync(uri,uid) {
   const blob = await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
