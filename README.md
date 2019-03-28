@@ -8,9 +8,9 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 	
 
 # Instruction to run this Project 
-<p>RUN npm install<br></p>
-<p>RUN npm install react_navigation<br></p>
-<p>RUN npm install firebase <br></p>
+- <p>RUN npm install<br></p>
+- <p>RUN npm install react_navigation<br></p>
+- <p>RUN npm install firebase <br></p>
 
 
 # Configure config.js - Add your firebase app config keys
