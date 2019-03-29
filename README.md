@@ -14,13 +14,13 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 
 
 # Configure config.js - Add your firebase app config keys
-	<p>export const firebaseConfig = {<br></p>
-	<p>  apiKey: '',<br></p>
-	<p> authDomain: '',<br></p>
-	<p> databaseURL: '',<br></p>
-	<p> projectId: '',<br></p>
-	<p> storageBucket: '',<br></p>
-	<p> messagingSenderId: ''<br></p>
-	<p>};<br></p>
+	export const firebaseConfig = {<br>
+	  apiKey: '',<br>
+	 authDomain: '',<br>
+	databaseURL: '',<br>
+	 projectId: '',<br>
+	 storageBucket: '',<br>
+	 messagingSenderId: ''<br>
+	<};<br>
 	
 # That's all you need!
