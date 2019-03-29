@@ -21,6 +21,6 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 	  projectId: '',
 	  storageBucket: '',
 	  messagingSenderId: ''
-	<};
+	};
 	
 # That's all you need!
