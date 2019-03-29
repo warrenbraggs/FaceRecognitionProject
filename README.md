@@ -1,6 +1,6 @@
 ## Face Recognition
 
-Simple Login App based on Email & Face Recognition. This app let you create an account with the common registration by email and password and then you can register your face too. In this way you can authenticate your identity with username and face recognition. 
+Simple Login App based on Email & Face Recognition. This app let you create an account with  email and password and then you can register your face id too. In this way you can authenticate your identity with username and face recognition. 
 
 ## Developers
 	 - Braggs Warren Federico 
@@ -13,7 +13,7 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 - <p>RUN npm install firebase <br></p>
 
 
-# Configure config.js - Add your firebase app config keys
+# Configure firebase.js - Add your App config keys
 	  export const firebaseConfig ={
 	  apiKey: '',
 	  authDomain: '',
