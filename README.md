@@ -14,7 +14,7 @@ Simple Login App based on Email & Face Recognition. This app let you create an a
 
 
 # Configure config.js - Add your firebase app config keys
-	  <p>export const firebaseConfig =<br></p>
+	  <p>export const firebaseConfig ={</p>
 	  apiKey: '',<br>
 	  authDomain: '',<br>
 	  databaseURL: '',<br>
